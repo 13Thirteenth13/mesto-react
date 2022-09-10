@@ -3,59 +3,93 @@ import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+  };
+
+  const handleEditProfileClick = () => {
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+  };
+
+  const handleAddPlaceClick = () => {
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+  };
+
+  const closeAllPopups = () => {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+  };
+
   return (
     <div>
       <div className="page">
         <Header />
-        <Main />
+        <Main
+          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+        />
         <Footer />
 
-        <div className="popup popup_type_edit-profile">
-          <div className="popup__container">
-            <button className="popup__close-button" type="button" aria-label="Закрыть"></button>
-            <h3 className="popup__heading">Редактировать профиль</h3>
-            <form className="popup__form" name="edit-form">
-              <fieldset className="popup__fieldset">
-                <input className="popup__input" name="name" id="name" type="text" placeholder="Имя" minlength="2" maxlength="40"
-                  required />
-                <span className="popup__error name-error"></span>
-                <input className="popup__input" name="about" id="description" type="text" placeholder="О себе" minlength="2"
-                  maxlength="200" required />
-                <span className="popup__error description-error"></span>
-                <button className="popup__submit-button" type="submit" aria-label="Сохранить">
-                  Сохранить
-                </button>
-              </fieldset>
-            </form>
-          </div>
-        </div>
+        <PopupWithForm
+          name="edit-profile"
+          heading="Редактировать профиль"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <fieldset className="popup__fieldset">
+            <input className="popup__input" name="name" id="name" type="text" placeholder="Имя" minlength="2" maxlength="40"
+              required />
+            <span className="popup__error name-error"></span>
+            <input className="popup__input" name="about" id="description" type="text" placeholder="О себе" minlength="2"
+              maxlength="200" required />
+            <span className="popup__error description-error"></span>
+            <button className="popup__submit-button" type="submit" aria-label="Сохранить">
+              Сохранить
+            </button>
+          </fieldset>
+        </PopupWithForm>
 
-        <div className="popup popup_type_new-element">
-          <div className="popup__container">
-            <button className="popup__close-button" type="button" aria-label="Закрыть"></button>
-            <h2 className="popup__heading">Новое место</h2>
-            <form className="popup__form" name="add-form">
-              <input className="popup__input" name="name" type="text" id="title" placeholder="Название" minlength="2"
-                maxlength="30" required />
-              <span className="popup__error title-error"></span>
-              <input className="popup__input" name="link" id="link" type="url" placeholder="Ссылка на картинку" required />
-              <span className="popup__error link-error"></span>
-              <button className="popup__submit-button" type="submit" aria-label="Создать">Создать</button>
-            </form>
-          </div>
-        </div>
+        <PopupWithForm
+          name="new-element"
+          heading="Новое место"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <>
+            <input className="popup__input" name="name" type="text" id="title" placeholder="Название" minlength="2"
+              maxlength="30" required />
+            <span className="popup__error title-error"></span>
+            <input className="popup__input" name="link" id="link" type="url" placeholder="Ссылка на картинку" required />
+            <span className="popup__error link-error"></span>
+            <button className="popup__submit-button" type="submit" aria-label="Создать">
+              Создать
+            </button>
+          </>
+        </PopupWithForm>
 
-        <div className="popup popup_type_view-image">
-          <div className="popup__image-container">
-            <button className="popup__close-button" type="button" aria-label="Закрыть"></button>
-            <figure className="popup__figure">
-              <img className="popup__image" />
-              <figcaption className="popup__figcaption"></figcaption>
-            </figure>
-          </div>
-        </div>
+        <PopupWithForm
+          name="avatar"
+          heading="Обновить аватар"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
+          <>
+            <input className="popup__input" name="avatar" type="url" id="avatar-link" placeholder="Ссылка на картинку" required />
+            <span className="popup__error avatar-link-error"></span>
+            <button className="popup__submit-button" type="submit" aria-label="Сохранить">
+              Сохранить
+            </button>
+          </>
+        </PopupWithForm>
 
         <div className="popup popup_type_confirm">
           <div className="popup__container">
@@ -66,34 +100,22 @@ function App() {
             </form>
           </div>
         </div>
-
-        <div className="popup popup_type_avatar">
-          <div className="popup__container">
-            <button className="popup__close-button" type="button" aria-label="Закрыть"></button>
-            <h2 className="popup__heading">Обновить аватар</h2>
-            <form className="popup__form" name="avatar-form">
-              <input className="popup__input" name="avatar" type="url" id="avatar-link" placeholder="Ссылка на картинку" required />
-              <span className="popup__error avatar-link-error"></span>
-              <button className="popup__submit-button" type="submit" aria-label="Сохранить">Сохранить</button>
-            </form>
-          </div>
-        </div>
-
-        <template className="element-template">
-          <li className="element">
-            <img className="element__image" />
-            <button className="element__trash-button" type="button" aria-label="Удалить"></button>
-            <div className="element__info">
-              <h2 className="element__heading"></h2>
-              <div className="element__like">
-                <button className="element__like-button" type="button" aria-label="Лайк"></button>
-                <p className="element__like-count">0</p>
-              </div>
-            </div>
-          </li>
-        </template>
-
       </div>
+
+      <template className="element-template">
+        <li className="element">
+          <img className="element__image" />
+          <button className="element__trash-button" type="button" aria-label="Удалить"></button>
+          <div className="element__info">
+            <h2 className="element__heading"></h2>
+            <div className="element__like">
+              <button className="element__like-button" type="button" aria-label="Лайк"></button>
+              <p className="element__like-count">0</p>
+            </div>
+          </div>
+        </li>
+      </template>
+
     </div>
   );
 }
