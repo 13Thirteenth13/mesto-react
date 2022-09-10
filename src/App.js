@@ -1,5 +1,7 @@
 import React from "react";
 
+import avatar from './images/avatar.jpg';
+
 function App() {
   return (
     <div>
@@ -9,7 +11,7 @@ function App() {
         </header>
         <main className="content">
           <section className="profile">
-            <img className="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Изображение профиля" />
+            <img className="profile__avatar" src={avatar} alt="Изображение профиля" />
             <button className="profile__edit-avatar-button" type="button" aria-label="Редактировать аватар"></button>
             <div className="profile__info">
               <h1 className="profile__name">Жак-Ив Кусто</h1>
