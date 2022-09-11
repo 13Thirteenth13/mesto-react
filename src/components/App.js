@@ -101,21 +101,6 @@ function App() {
           </div>
         </div>
       </div>
-
-      <template className="element-template">
-        <li className="element">
-          <img className="element__image" />
-          <button className="element__trash-button" type="button" aria-label="Удалить"></button>
-          <div className="element__info">
-            <h2 className="element__heading"></h2>
-            <div className="element__like">
-              <button className="element__like-button" type="button" aria-label="Лайк"></button>
-              <p className="element__like-count">0</p>
-            </div>
-          </div>
-        </li>
-      </template>
-
     </div>
   );
 }

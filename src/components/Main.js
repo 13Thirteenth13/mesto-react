@@ -5,6 +5,7 @@ function Main(props) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -12,6 +13,17 @@ function Main(props) {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  });
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -35,7 +47,25 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        <ul className="elements__cards"></ul>
+        <ul className="elements__cards">
+          {cards.map((card) => {
+            return (
+              <li className="element" key={card._id}>
+                <img className="element__image" src={card.link} alt={card.name} />
+                <button className="element__trash-button" type="button" aria-label="Удалить"></button>
+                <div className="element__info">
+                  <h2 className="element__heading">{card.name}</h2>
+                  <div className="element__like">
+                    <button className="element__like-button" type="button" aria-label="Лайк"></button>
+                    <p className="element__like-count">
+                    {card.likes.length}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            );
+          })};
+        </ul>
       </section>
 
     </main>
