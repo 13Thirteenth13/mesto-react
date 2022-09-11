@@ -12,7 +12,12 @@ function PopupWithForm(props) {
           name={`${props.name}`}
           action="#"
           noValidate>
-          {props.children}
+          <fieldset className="popup__fieldset">
+            {props.children}
+            <button className="popup__submit-button" type="submit" aria-label={props.submit}>
+            {props.submit}
+            </button>
+          </fieldset>
         </form>
       </div>
     </div>

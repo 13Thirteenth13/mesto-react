@@ -18,7 +18,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
-  });
+  }, []);
 
   React.useEffect(() => {
     api
@@ -29,7 +29,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
-  });
+  }, []);
 
   return (
     <main className="content">
