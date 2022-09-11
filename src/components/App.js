@@ -46,11 +46,11 @@ function App() {
           onClose={closeAllPopups}
         >
           <fieldset className="popup__fieldset">
-            <input className="popup__input" name="name" id="name" type="text" placeholder="Имя" minlength="2" maxlength="40"
+            <input className="popup__input" name="name" id="name" type="text" placeholder="Имя" minLength="2" maxLength="40"
               required />
             <span className="popup__error name-error"></span>
-            <input className="popup__input" name="about" id="description" type="text" placeholder="О себе" minlength="2"
-              maxlength="200" required />
+            <input className="popup__input" name="about" id="description" type="text" placeholder="О себе" minLength="2"
+              maxLength="200" required />
             <span className="popup__error description-error"></span>
             <button className="popup__submit-button" type="submit" aria-label="Сохранить">
               Сохранить
@@ -65,8 +65,8 @@ function App() {
           onClose={closeAllPopups}
         >
           <>
-            <input className="popup__input" name="name" type="text" id="title" placeholder="Название" minlength="2"
-              maxlength="30" required />
+            <input className="popup__input" name="name" type="text" id="title" placeholder="Название" minLength="2"
+              maxLength="30" required />
             <span className="popup__error title-error"></span>
             <input className="popup__input" name="link" id="link" type="url" placeholder="Ссылка на картинку" required />
             <span className="popup__error link-error"></span>
