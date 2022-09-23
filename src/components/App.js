@@ -6,6 +6,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 import api from "../utils/api";
 
 function App() {
@@ -23,8 +24,8 @@ function App() {
 
   useEffect(() => {
     api.getUserInfo()
-      .then(data => {setCurrentUser(data)})
-      .catch(err => {console.log(err)})
+      .then(data => { setCurrentUser(data) })
+      .catch(err => { console.log(err) })
   }, []);
 
   const handleEditAvatarClick = () => {
@@ -41,6 +42,17 @@ function App() {
 
   const handleCardClick = card => {
     setSelectedCard(card);
+  };
+
+  const handleUpdateUser = (newUserInfo) => {
+    api.setUserInfo(newUserInfo)
+      .then((data) => {
+        setCurrentUser(data)
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
   };
 
   const closeAllPopups = () => {
@@ -62,22 +74,11 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
-          name="edit-profile"
-          heading="Редактировать профиль"
-          submit="Сохранить"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <>
-            <input className="popup__input" name="name" id="name" type="text" placeholder="Имя" minLength="2" maxLength="40"
-              required />
-            <span className="popup__error name-error"></span>
-            <input className="popup__input" name="about" id="description" type="text" placeholder="О себе" minLength="2"
-              maxLength="200" required />
-            <span className="popup__error description-error"></span>
-          </>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           name="new-element"
@@ -119,7 +120,7 @@ function App() {
           </div>
         </div>
       </div>
-      </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 
