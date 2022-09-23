@@ -5,8 +5,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [cards, setCards] = useState([]);
-
-  const {name, about, avatar} = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
+  const {name, about, avatar} = currentUser;
 
   useEffect(() => {
     api
@@ -18,6 +18,19 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         console.log(`Ошибка: ${err}`);
       });
   }, []);
+
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api.toggleLikeCard(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  };
 
   return (
     <main className="content">
@@ -39,9 +52,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         <ul className="elements__cards">
           {cards.map((card) => {
             return (
-             <Card key={card._id} card={card} onCardClick={onCardClick} />
+             <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={handleCardLike} />
             );
-          })};
+          })}
         </ul>
       </section>
 

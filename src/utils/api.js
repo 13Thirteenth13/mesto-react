@@ -75,22 +75,13 @@ class Api {
       .then((res) => this._checkServerResponse(res));
   };
 
-  //поставить лайк
-  setLike(cardID) {
-    return fetch(`${this._url}/cards/${cardID}/likes`, {
-      method: 'PUT',
+  //поставить/снять лайк
+  toggleLikeCard(cardId, isLiked) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: `${!isLiked ? 'DELETE' : 'PUT'}`,
       headers: this._headers
     })
-      .then((res) => this._checkServerResponse(res));
-  };
-
-  //снять лайк
-  deleteLike(cardID) {
-    return fetch(`${this._url}/cards/${cardID}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then((res) => this._checkServerResponse(res));
+      .then(res => this._checkServerResponse(res));
   };
 
 };
