@@ -6,7 +6,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [cards, setCards] = useState([]);
   const currentUser = useContext(CurrentUserContext);
-  const {name, about, avatar} = currentUser;
+  const { name, about, avatar } = currentUser;
 
   useEffect(() => {
     api
@@ -26,6 +26,16 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
         );
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
+  };
+
+  const handleCardDelete = (cardId) => {
+    api.deleteCard(cardId)
+      .then(() => {
+        setCards((cards) => cards.filter(card => card._id !== cardId));
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -52,7 +62,13 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         <ul className="elements__cards">
           {cards.map((card) => {
             return (
-             <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={handleCardLike} />
+              <Card
+                key={card._id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+              />
             );
           })}
         </ul>
