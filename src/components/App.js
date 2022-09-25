@@ -23,6 +23,7 @@ function App() {
     cohort: ""
   });
   const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     api.getInitialCards()
@@ -84,6 +85,7 @@ function App() {
   };
 
   const handleUpdateUser = (newUserInfo) => {
+    setIsLoading(true);
     api.setUserInfo(newUserInfo)
       .then((data) => {
         setCurrentUser(data)
@@ -92,9 +94,13 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
   };
 
   const handleUpdateAvatar = (data) => {
+    setIsLoading(true);
     api.setUserAvatar(data)
       .then((data) => {
         setCurrentUser(data);
@@ -103,9 +109,13 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
   };
 
   const handleAddPlaceSubmit = (newData) => {
+    setIsLoading(true);
     api.addCard(newData)
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -113,6 +123,9 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   };
 
@@ -142,18 +155,21 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          onLoading={isLoading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          onLoading={isLoading}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          onLoading={isLoading}
         />
 
         <ImagePopup
