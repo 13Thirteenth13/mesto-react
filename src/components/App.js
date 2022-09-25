@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import api from "../utils/api";
 
 function App() {
@@ -55,6 +56,17 @@ function App() {
       })
   };
 
+  const handleUpdateAvatar = (data) => {
+    api.setUserAvatar(data)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+  };
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -96,18 +108,8 @@ function App() {
           </>
         </PopupWithForm>
 
-        <PopupWithForm
-          name="avatar"
-          heading="Обновить аватар"
-          submit="Сохранить"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <>
-            <input className="popup__input" name="avatar" type="url" id="avatar-link" placeholder="Ссылка на картинку" required />
-            <span className="popup__error avatar-link-error"></span>
-          </>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
         <div className="popup popup_type_confirm">
