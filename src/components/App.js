@@ -140,6 +140,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
+
         <Main
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
@@ -177,15 +178,6 @@ function App() {
           onClose={closeAllPopups}
         />
 
-        <div className="popup popup_type_confirm">
-          <div className="popup__container">
-            <button className="popup__close-button" type="button" aria-label="Закрыть"></button>
-            <h2 className="popup__heading">Вы уверены?</h2>
-            <form className="popup__form" name="confirm-form">
-              <button className="popup__submit-button" type="submit" aria-label="Да">Да</button>
-            </form>
-          </div>
-        </div>
       </div>
     </CurrentUserContext.Provider>
   );

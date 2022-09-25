@@ -41,6 +41,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onLoading }) {
           minLength="2"
           maxLength="30"
           onChange={handleDescriptionChange}
+          value={description}
           required />
         <span className="popup__error title-error"></span>
         <input
@@ -50,6 +51,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onLoading }) {
           type="url"
           placeholder="Ссылка на картинку"
           onChange={handleImageChange}
+          value={image}
           required />
         <span className="popup__error link-error"></span>
       </>

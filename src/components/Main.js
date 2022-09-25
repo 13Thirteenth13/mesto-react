@@ -17,8 +17,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onC
           className="profile__edit-avatar-button"
           type="button"
           onClick={onEditAvatar}
-          aria-label="Редактировать аватар">
-        </button>
+          aria-label="Редактировать аватар"
+        />
         <div className="profile__info">
           <h1 className="profile__name">{name}</h1>
           <p className="profile__description">{about}</p>
@@ -26,15 +26,15 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onC
             className="profile__edit-button"
             type="button"
             onClick={onEditProfile}
-            aria-label="Редактировать профиль">
-          </button>
+            aria-label="Редактировать профиль"
+          />
         </div>
         <button
           className="profile__add-button"
           type="button"
           onClick={onAddPlace}
-          aria-label="Добавить новую карточку">
-        </button>
+          aria-label="Добавить новую карточку"
+        />
       </section>
 
       <section className="elements">
