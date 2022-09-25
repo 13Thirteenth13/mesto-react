@@ -33,6 +33,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       </>
     </PopupWithForm>
   );
-};
+}
 
 export default EditAvatarPopup;

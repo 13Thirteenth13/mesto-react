@@ -66,6 +66,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       </>
     </PopupWithForm>
   );
-};
+}
 
 export default EditProfilePopup;

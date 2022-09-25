@@ -54,7 +54,7 @@ class Api {
   };
 
   //добавить новую карточку
-  sendCard(data) {
+  addCard(data) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: this._headers,
