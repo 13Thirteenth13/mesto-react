@@ -15,13 +15,13 @@ function PopupWithForm(props) {
           className="popup__form"
           name={`${props.name}`}
           action="#"
-          onSubmit={props.onSubmit}
-          noValidate>
+          onSubmit={props.onSubmit}>
           <fieldset className="popup__fieldset">
             {props.children}
             <button
-              className="popup__submit-button"
+              className={`popup__submit-button ${props.stateSubmitButton ? "popup__submit-button_disabled" : ""}`}
               type="submit"
+              disabled={props.stateSubmitButton}
               aria-label={props.submit}>
               {props.submit}
             </button>

@@ -23,7 +23,11 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   return (
     <li className="element" key={card._id}>
-      <img className="element__image" src={card.link} onClick={handleClick} alt={card.name} />
+      <img
+        className="element__image"
+        src={card.link}
+        onClick={handleClick}
+        alt={card.name} />
       {isOwn &&
         <button
           className="element__trash-button"

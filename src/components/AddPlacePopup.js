@@ -1,32 +1,29 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import useForm from "../hooks/useForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, onLoading }) {
-  const [image, setImage] = useState('');
-  const [description, setDescription] = useState('');
-
-  const handleImageChange = (evt) => {
-    setImage(evt.target.value);
-  };
-
-  const handleDescriptionChange = (evt) => {
-    setDescription(evt.target.value);
-  };
+  const { enteredValues, errors, handleChange, isFormValid, resetForm } = useForm();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     onAddPlace({
-      name: description,
-      link: image
+      name: enteredValues.title,
+      link: enteredValues.link
     });
   };
+
+  useEffect(() => {
+    resetForm()
+  }, [resetForm, isOpen]);
 
   return (
     <PopupWithForm
       name="new-element"
       heading="Новое место"
       submit={onLoading ? "Создание..." : "Создать"}
+      stateSubmitButton={!isFormValid}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -34,26 +31,26 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onLoading }) {
       <>
         <input
           className="popup__input"
-          name="name"
+          name="title"
           type="text"
           id="title"
           placeholder="Название"
           minLength="2"
           maxLength="30"
-          onChange={handleDescriptionChange}
-          value={description}
+          onChange={handleChange}
+          value={enteredValues.title || ""}
           required />
-        <span className="popup__error title-error"></span>
+        {errors.title && <span className="popup__error title-error">{errors.title}</span>}
         <input
           className="popup__input"
           name="link"
           id="link"
           type="url"
           placeholder="Ссылка на картинку"
-          onChange={handleImageChange}
-          value={image}
+          onChange={handleChange}
+          value={enteredValues.link || ""}
           required />
-        <span className="popup__error link-error"></span>
+        {errors.link && <span className="popup__error link-error">{errors.link}</span>}
       </>
     </PopupWithForm>
   );
